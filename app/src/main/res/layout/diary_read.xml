@@ -8,19 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/diaryTitleView"
-        android:background="#FAE0AF"/>
+        android:background="#DAE0AF"/>
 
-    <Gallery
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/gallery"
-        android:spacing="5dp" />
+        android:id="@+id/DiaryImgView"
+        android:background="#FAE0AF"
+        android:spacing="5dp"
+        android:layout_below="@id/diaryTitleView"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/diaryTextView"
-        android:background="#FAE0AF"/>
+        android:background="#FAE0AF"
+        android:layout_below="@id/DiaryImgView"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
