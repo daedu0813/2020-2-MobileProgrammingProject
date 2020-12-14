@@ -1,6 +1,7 @@
 package com.example.todaydiary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,7 +22,6 @@ import java.io.InputStream;
 import java.util.BitSet;
 
 public class DiaryWrite extends Activity {
-
     TextView textDate;
     EditText diaryTitleWrite, diaryTextWrite;
     Button btnFindIMG, btnFindBGM, btnSaveDiary;
@@ -31,7 +31,6 @@ public class DiaryWrite extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_write);
-        setTitle("일기 쓰기");
 
         textDate = (TextView)findViewById(R.id.textDate);
         diaryTitleWrite = (EditText)findViewById(R.id.diaryTitleWrite);
@@ -59,12 +58,23 @@ public class DiaryWrite extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                    File file = new File(IntentDateText + "-Img.jpg");
+                    //File file = new File(IntentDateText + "-Img.jpg");
                     FileOutputStream outImg = openFileOutput(IntentDateText + "-Img.jpg", 0);
                     Bitmap img = ((BitmapDrawable)diaryImgViewWrite.getDrawable()).getBitmap();
                     img.compress(Bitmap.CompressFormat.JPEG, 100, outImg);
                     outImg.flush();
                     outImg.close();
+                    //File file1 = new File(IntentDateText + "-Title.txt");
+                    FileOutputStream outTitle = openFileOutput(IntentDateText + "-Title.txt", Context.MODE_PRIVATE);
+                    String title = diaryTitleWrite.getText().toString();
+                    outTitle.write(title.getBytes());
+                    outTitle.close();
+                    //File file2 = new File(IntentDateText + "-Text.txt");
+                    FileOutputStream outText = openFileOutput(IntentDateText + "-Text.txt", Context.MODE_PRIVATE);
+                    String text = diaryTextWrite.getText().toString();
+                    outText.write(text.getBytes());
+                    outText.close();
+                    Toast.makeText(getApplicationContext(), IntentDateText + " 일기 저장됨", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {}
             }
         });

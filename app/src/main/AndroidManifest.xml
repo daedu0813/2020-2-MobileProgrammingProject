@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name='.DiaryWrite' android:label="일기 쓰기"></activity>
+        <activity android:name='.DiaryRead' android:label="일기 읽기"></activity>
     </application>
 
 </manifest>
