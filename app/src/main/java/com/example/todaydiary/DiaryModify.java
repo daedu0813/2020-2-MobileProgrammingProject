@@ -1,14 +1,13 @@
 package com.example.todaydiary;
 
 import android.app.Activity;
-import android.content.ContentUris;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,19 +22,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.BitSet;
 
-public class DiaryWrite extends Activity {
+public class DiaryModify extends Activity {
     TextView textDate, diaryBgmViewWrite;
     EditText diaryTitleWrite, diaryTextWrite;
     Button btnFindIMG, btnFindBGM, btnSaveDiary;
@@ -57,10 +50,22 @@ public class DiaryWrite extends Activity {
         diaryImgViewWrite = (ImageView)findViewById(R.id.diaryImgViewWrite);
         diaryBgmViewWrite = (TextView)findViewById(R.id.diaryBgmViewWrite);
 
-        Intent mainIntent = getIntent();
-        String IntentDateText = mainIntent.getStringExtra("valueDateText");
+        Intent readIntent = getIntent();
+        String IntentDateText = readIntent.getStringExtra("IntentDateText");
+        String IntentTitle = readIntent.getStringExtra("originTitle");
+        String IntentText = readIntent.getStringExtra("originText");
         textDate.setText(IntentDateText);
-
+        diaryTitleWrite.setText(IntentTitle);
+        diaryTextWrite.setText(IntentText);
+        try {
+            FileInputStream inImg = openFileInput(IntentDateText + "-Image.jpg");
+            Bitmap img = BitmapFactory.decodeStream(inImg);
+            inImg.close();
+            diaryImgViewWrite.setImageBitmap(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        diaryBgmViewWrite.setText(IntentDateText + "-Audio.mp3");
         btnFindIMG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +106,6 @@ public class DiaryWrite extends Activity {
                     outText.close();
 
                     FileOutputStream outBgm = openFileOutput(IntentDateText + "-Audio.mp3", 0);
-                    Log.d("URI", String.valueOf(URI));
                     InputStream inS = getContentResolver().openInputStream(URI);
                     byte[] bin = new byte[1024];
                     int len;
@@ -111,8 +115,7 @@ public class DiaryWrite extends Activity {
                     inS.close();
 
                     finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    Toast.makeText(getApplicationContext(), IntentDateText + " 일기 저장 완료", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), IntentDateText + " 일기 수정됨", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -174,5 +177,4 @@ public class DiaryWrite extends Activity {
         }
         return result;
     }
-
 }

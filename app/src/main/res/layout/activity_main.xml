@@ -13,6 +13,14 @@
         android:layout_height="wrap_content" >
     </ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="빅데이터 20155107 김기훈"
+        android:gravity="top"
+        android:layout_alignParentBottom="true"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,14 +36,14 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"/>
 
-    <ImageButton
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/btnDeleteArticle"
-        android:src="@drawable/trashcan"
-        android:scaleType="fitCenter"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"/>
+<!--    <ImageButton-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:id="@+id/btnDeleteArticle"-->
+<!--        android:src="@drawable/trashcan"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:layout_marginRight="5dp"-->
+<!--        android:layout_marginBottom="5dp"/>-->
 
     </LinearLayout>
 
