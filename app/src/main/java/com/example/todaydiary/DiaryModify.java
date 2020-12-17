@@ -39,6 +39,7 @@ public class DiaryModify extends Activity {
 
     @Override
     public void onBackPressed() {
+        finish();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 

@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
 
     @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
