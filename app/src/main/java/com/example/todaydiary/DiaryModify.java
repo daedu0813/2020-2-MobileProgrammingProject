@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -105,15 +106,16 @@ public class DiaryModify extends Activity {
                     outText.write(text.getBytes());
                     outText.close();
 
-                    FileOutputStream outBgm = openFileOutput(IntentDateText + "-Audio.mp3", 0);
-                    InputStream inS = getContentResolver().openInputStream(URI);
-                    byte[] bin = new byte[1024];
-                    int len;
-                    while((len=inS.read(bin))>0)
-                        outBgm.write(bin, 0, len);
-                    outBgm.close();
-                    inS.close();
-
+                    if(URI != null) {
+                        FileOutputStream outBgm = openFileOutput(IntentDateText + "-Audio.mp3", 0);
+                        InputStream inS = getContentResolver().openInputStream(URI);
+                        byte[] bin = new byte[1024];
+                        int len;
+                        while((len=inS.read(bin))>0)
+                            outBgm.write(bin, 0, len);
+                        outBgm.close();
+                        inS.close();
+                    }
                     finish();
                     Toast.makeText(getApplicationContext(), IntentDateText + " 일기 수정됨", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {

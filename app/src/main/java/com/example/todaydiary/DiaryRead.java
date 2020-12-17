@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class DiaryRead extends Activity {
 
+    static String DATE;
     TextView textDate, diaryTitleRead, diaryTextRead;
     ImageButton btnModifyArtice, btnDeleteArticle;
     ImageView diaryImgViewRead;
@@ -48,6 +49,7 @@ public class DiaryRead extends Activity {
 
         Intent mainIntent = getIntent();
         String IntentDateText = mainIntent.getStringExtra("valueDateText");
+        DATE = IntentDateText;
         textDate.setText(IntentDateText);
 
         diaryTitleRead = (TextView)findViewById(R.id.diaryTitleView);
@@ -99,7 +101,6 @@ public class DiaryRead extends Activity {
                     }
                     else
                         mp.stop();
-
                 }
             });
         } catch (Exception e) {}
@@ -112,6 +113,7 @@ public class DiaryRead extends Activity {
                 modifyIntent.putExtra("originTitle", diaryTitleRead.getText().toString());
                 modifyIntent.putExtra("originText", diaryTextRead.getText().toString());
                 startActivity(modifyIntent);
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
 
@@ -127,6 +129,7 @@ public class DiaryRead extends Activity {
                 Fimg.delete();
                 Fbgm.delete();
                 finish();
+                android.os.Process.killProcess(android.os.Process.myPid());
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
