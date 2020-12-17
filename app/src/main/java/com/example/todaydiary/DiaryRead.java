@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 public class DiaryRead extends Activity {
 
-    static String DATE;
     TextView textDate, diaryTitleRead, diaryTextRead;
     ImageButton btnModifyArtice, btnDeleteArticle;
     ImageView diaryImgViewRead;
@@ -49,7 +48,6 @@ public class DiaryRead extends Activity {
 
         Intent mainIntent = getIntent();
         String IntentDateText = mainIntent.getStringExtra("valueDateText");
-        DATE = IntentDateText;
         textDate.setText(IntentDateText);
 
         diaryTitleRead = (TextView)findViewById(R.id.diaryTitleView);

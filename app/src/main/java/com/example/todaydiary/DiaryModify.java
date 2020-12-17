@@ -38,18 +38,23 @@ public class DiaryModify extends Activity {
     Uri URI;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_write);
 
-        textDate = (TextView)findViewById(R.id.textDate);
-        diaryTitleWrite = (EditText)findViewById(R.id.diaryTitleWrite);
-        diaryTextWrite = (EditText)findViewById(R.id.diaryTextWrite);
-        btnFindBGM = (Button)findViewById(R.id.btnFindBGM);
-        btnFindIMG = (Button)findViewById(R.id.btnFindIMG);
-        btnSaveDiary = (Button)findViewById(R.id.btnSaveDiary);
-        diaryImgViewWrite = (ImageView)findViewById(R.id.diaryImgViewWrite);
-        diaryBgmViewWrite = (TextView)findViewById(R.id.diaryBgmViewWrite);
+        textDate = (TextView) findViewById(R.id.textDate);
+        diaryTitleWrite = (EditText) findViewById(R.id.diaryTitleWrite);
+        diaryTextWrite = (EditText) findViewById(R.id.diaryTextWrite);
+        btnFindBGM = (Button) findViewById(R.id.btnFindBGM);
+        btnFindIMG = (Button) findViewById(R.id.btnFindIMG);
+        btnSaveDiary = (Button) findViewById(R.id.btnSaveDiary);
+        diaryImgViewWrite = (ImageView) findViewById(R.id.diaryImgViewWrite);
+        diaryBgmViewWrite = (TextView) findViewById(R.id.diaryBgmViewWrite);
 
         Intent readIntent = getIntent();
         String IntentDateText = readIntent.getStringExtra("IntentDateText");
@@ -91,7 +96,7 @@ public class DiaryModify extends Activity {
             public void onClick(View v) {
                 try {
                     FileOutputStream outImg = openFileOutput(IntentDateText + "-Image.jpg", 0);
-                    Bitmap img = ((BitmapDrawable)diaryImgViewWrite.getDrawable()).getBitmap();
+                    Bitmap img = ((BitmapDrawable) diaryImgViewWrite.getDrawable()).getBitmap();
                     img.compress(Bitmap.CompressFormat.JPEG, 100, outImg);
                     outImg.flush();
                     outImg.close();
@@ -106,12 +111,12 @@ public class DiaryModify extends Activity {
                     outText.write(text.getBytes());
                     outText.close();
 
-                    if(URI != null) {
+                    if (URI != null) {
                         FileOutputStream outBgm = openFileOutput(IntentDateText + "-Audio.mp3", 0);
                         InputStream inS = getContentResolver().openInputStream(URI);
                         byte[] bin = new byte[1024];
                         int len;
-                        while((len=inS.read(bin))>0)
+                        while ((len = inS.read(bin)) > 0)
                             outBgm.write(bin, 0, len);
                         outBgm.close();
                         inS.close();
@@ -128,8 +133,8 @@ public class DiaryModify extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0) {
-            if(resultCode == RESULT_OK) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
                 try {
                     InputStream inImg = getContentResolver().openInputStream(data.getData());
 
@@ -137,22 +142,22 @@ public class DiaryModify extends Activity {
                     inImg.close();
 
                     diaryImgViewWrite.setImageBitmap(img);
-                } catch (Exception e) {}
-            }
-            else if(resultCode == RESULT_CANCELED) {
+                } catch (Exception e) {
+                }
+            } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 try {
                     Uri uri = data.getData();
 
                     URI = uri;
 
                     diaryBgmViewWrite.setText(getFileName(uri));
-                } catch (Exception e) {}
-            }
-            else if(resultCode == RESULT_CANCELED) {
+                } catch (Exception e) {
+                }
+            } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "오디오 선택 취소", Toast.LENGTH_LONG).show();
             }
         }

@@ -44,6 +44,11 @@ public class DiaryWrite extends Activity {
     Uri URI;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_write);
