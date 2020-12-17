@@ -35,6 +35,11 @@ public class DiaryRead extends Activity {
     Switch playerSwitch;
 
     @Override
+    public void onBackPressed() {
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_read);

@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), year + "년 " + month + "월 " + day + "일 일기 작성", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), DiaryWrite.class);
             intent.putExtra("valueDateText", year + "-" + month + "-" + day);
+            finish();
             startActivity(intent);
         }
     };
